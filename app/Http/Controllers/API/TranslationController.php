@@ -15,6 +15,24 @@ class TranslationController extends Controller
         private TranslationService $translationService
     ) {}
 
+    public function index(Request $request): JsonResponse
+    {
+        $filters = $request->only(['locale', 'key', 'tags', 'search']);
+        $perPage = $request->integer('per_page', 15);
+
+        $translations = $this->translationService->searchTranslations($filters, $perPage);
+
+        return response()->json([
+            'data' => $translations->items(),
+            'meta' => [
+                'current_page' => $translations->currentPage(),
+                'per_page' => $translations->perPage(),
+                'total' => $translations->total(),
+                'last_page' => $translations->lastPage(),
+            ],
+        ]);
+    }
+
     public function store(CreateTranslationRequest $request): JsonResponse
     {
         try {
@@ -78,5 +96,24 @@ class TranslationController extends Controller
                 'error' => $e->getMessage(),
             ], 400);
         }
+    }
+
+    public function export(string $locale): JsonResponse
+    {
+        $startTime = microtime(true);
+        
+        $translations = $this->translationService->getTranslationsForLocale($locale);
+        
+        $endTime = microtime(true);
+        $executionTime = ($endTime - $startTime) * 1000;
+
+        return response()->json([
+            'locale' => $locale,
+            'translations' => $translations,
+            'meta' => [
+                'count' => count($translations),
+                'execution_time_ms' => round($executionTime, 2),
+            ],
+        ]);
     }
 }

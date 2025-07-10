@@ -12,4 +12,7 @@ interface TranslationRepositoryInterface
     public function update(Translation $translation, array $data): Translation;
     public function delete(Translation $translation): bool;
     public function findByKeyAndLocale(string $key, string $locale): ?Translation;
+    public function search(array $filters, int $perPage = 15): LengthAwarePaginator;
+    public function getByLocale(string $locale): Collection;
+    public function bulkCreate(array $translations): bool;
 }

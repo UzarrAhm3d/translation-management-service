@@ -104,4 +104,59 @@ class TranslationApiTest extends TestCase
             'locale' => $translation->locale,
         ]);
     }
+
+    public function test_can_export_translations(): void
+    {
+        Translation::factory()->count(5)->create(['locale' => 'en']);
+
+        $response = $this->getJson('/api/translations/export/en', $this->authHeaders());
+
+        $response->assertStatus(200)
+                ->assertJsonStructure([
+                    'locale',
+                    'translations',
+                    'meta' => [
+                        'count',
+                        'execution_time_ms',
+                    ],
+                ]);
+
+        $this->assertLessThan(500, $response->json('meta.execution_time_ms'));
+    }
+
+    public function test_export_performance_with_large_dataset(): void
+    {
+        Translation::factory()->count(1000)->create(['locale' => 'en']);
+
+        $startTime = microtime(true);
+        $response = $this->getJson('/api/translations/export/en', $this->authHeaders());
+        $endTime = microtime(true);
+
+        $executionTime = ($endTime - $startTime) * 1000;
+
+        $response->assertStatus(200);
+        $this->assertLessThan(500, $executionTime);
+    }
+
+    public function test_requires_authentication(): void
+    {
+        $response = $this->getJson('/api/translations');
+
+        $response->assertStatus(401)
+                ->assertJson([
+                    'message' => 'Token required',
+                ]);
+    }
+
+    public function test_rejects_invalid_token(): void
+    {
+        $response = $this->getJson('/api/translations', [
+            'Authorization' => 'Bearer invalid-token',
+        ]);
+
+        $response->assertStatus(401)
+                ->assertJson([
+                    'message' => 'Invalid token',
+                ]);
+    }
 }

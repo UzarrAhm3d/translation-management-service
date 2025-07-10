@@ -33,4 +33,18 @@ class Translation extends Model
     public function scopeByLocale(Builder $query, string $locale) {
         return $query->where('locale', $locale);
     }
+
+    public function scopeByTags(Builder $query, array $tags): Builder
+    {
+        return $query->where(function ($q) use ($tags) {
+            foreach ($tags as $tag) {
+                $q->orWhereJsonContains('tags', $tag);
+            }
+        });
+    }
+
+    public function scopeSearchContent(Builder $query, string $search): Builder
+    {
+        return $query->where('content', 'LIKE', "%{$search}%");
+    }
 }
