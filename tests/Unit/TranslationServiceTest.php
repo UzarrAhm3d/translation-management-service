@@ -43,12 +43,4 @@ class TranslationServiceTest extends TestCase
         $this->assertEquals($data['locale'], $translation->locale);
         $this->assertEquals($data['content'], $translation->content);
     }
-
-    /**
-     * A basic unit test example.
-     */
-    public function test_example(): void
-    {
-        $this->assertTrue(true);
-    }
 }

@@ -1,0 +1,186 @@
+openapi: 3.0.3
+info:
+  title: 'Laravel API Documentation'
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost'
+tags:
+  -
+    name: Endpoints
+    description: ''
+paths:
+  /api/translations:
+    get:
+      summary: ''
+      operationId: getApiTranslations
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Token required'
+                properties:
+                  message:
+                    type: string
+                    example: 'Token required'
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postApiTranslations
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: vmqeopfuudtdsufvyvddq
+                  nullable: false
+                locale:
+                  type: string
+                  description: 'Must not be greater than 10 characters.'
+                  example: af_NA
+                  nullable: false
+                content:
+                  type: string
+                  description: ''
+                  example: consequatur
+                  nullable: false
+                tags:
+                  type: array
+                  description: 'Must not be greater than 50 characters.'
+                  example:
+                    - mqeopfuudtdsufvyvddqa
+                  items:
+                    type: string
+              required:
+                - key
+                - locale
+                - content
+      security: []
+  '/api/translations/export/{locale}':
+    get:
+      summary: ''
+      operationId: getApiTranslationsExportLocale
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Token required'
+                properties:
+                  message:
+                    type: string
+                    example: 'Token required'
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: locale
+        description: ''
+        example: so_ET
+        required: true
+        schema:
+          type: string
+  '/api/translations/{key}/{locale}':
+    get:
+      summary: ''
+      operationId: getApiTranslationsKeyLocale
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Token required'
+                properties:
+                  message:
+                    type: string
+                    example: 'Token required'
+      tags:
+        - Endpoints
+      security: []
+    put:
+      summary: ''
+      operationId: putApiTranslationsKeyLocale
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: ''
+                  example: consequatur
+                  nullable: false
+                tags:
+                  type: array
+                  description: 'Must not be greater than 50 characters.'
+                  example:
+                    - mqeopfuudtdsufvyvddqa
+                  items:
+                    type: string
+              required:
+                - content
+      security: []
+    delete:
+      summary: ''
+      operationId: deleteApiTranslationsKeyLocale
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: key
+        description: ''
+        example: consequatur
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: locale
+        description: ''
+        example: so_ET
+        required: true
+        schema:
+          type: string

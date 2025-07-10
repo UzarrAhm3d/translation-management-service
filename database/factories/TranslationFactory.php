@@ -19,7 +19,7 @@ class TranslationFactory extends Factory
     public function definition(): array
     {
         return [
-            'key' => $this->faker->unique()->word(),
+            'key' => $this->faker->unique()->lexify('key_??????'),
             'locale' => $this->faker->randomElement(['en', 'fr', 'es', 'de', 'it']),
             'content' => $this->faker->sentence(),
             'tags' => $this->faker->randomElements(['mobile', 'desktop', 'web'], 2),
