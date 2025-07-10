@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Translation extends Model
@@ -21,4 +22,12 @@ class Translation extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function scopeByKey(Builder $query, string $key) {
+        return $query->where('key', $key);
+    }
+
+    public function scopeByLocale(Builder $query, string $locale) {
+        return $query->where('locale', $locale);
+    }
 }
