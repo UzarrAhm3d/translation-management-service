@@ -36,7 +36,7 @@ class TranslationServiceTest extends TestCase
             'tags' => ['web'],
         ];
 
-        $translation = $this->service->createTransaction($data);
+        $translation = $this->service->createTranslation($data);
 
         $this->assertInstanceOf(Translation::class, $translation);
         $this->assertEquals($data['key'], $translation->key);

@@ -11,12 +11,12 @@ class TranslationService
         private TranslationRepositoryInterface $translationRepository
     ) {}
 
-    public function createTransaction(array $data): Translation 
+    public function createTranslation(array $data): Translation 
     {
         return $this->translationRepository->create($data);
     }
 
-    public function updateTransaction(string $key, string $locale, array $data): Translation
+    public function updateTranslation(string $key, string $locale, array $data): Translation
     {
         $translation = $this->translationRepository->findByKeyAndLocale($key, $locale);
 
@@ -27,7 +27,7 @@ class TranslationService
         return $this->translationRepository->update($translation, $data);
     }
 
-    public function deleteTransaction(string $key, string $locale): bool
+    public function deleteTranslation(string $key, string $locale): bool
     {
         $translation = $this->translationRepository->findByKeyAndLocale($key, $locale);
 
